@@ -27,11 +27,19 @@ export default function FuturisticCursor({
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Default to true to prevent rendering until we check
+  const [isClient, setIsClient] = useState(false) // Add this to handle client-side rendering
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 })
+  
+  // Check if we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   
   // Check if device is mobile
   useEffect(() => {
+    if (!isClient) return; // Only run on client
+    
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
@@ -46,21 +54,17 @@ export default function FuturisticCursor({
     return () => {
       window.removeEventListener('resize', checkIfMobile)
     }
-  }, [])
-  
-  // If mobile device, don't render the cursor
-  if (isMobile) {
-    return null
-  }
+  }, [isClient])
   
   // Initialize trail refs
   useEffect(() => {
+    if (!isClient) return; // Only run on client
     trailRefs.current = Array(trailCount).fill(null)
-  }, [trailCount])
+  }, [trailCount, isClient])
 
   // Create ripple effect on click
   const createRipple = (x: number, y: number) => {
-    if (!rippleContainerRef.current) return
+    if (!rippleContainerRef.current || !isClient) return
     
     // Create ripple element
     const ripple = document.createElement('div')
@@ -87,9 +91,11 @@ export default function FuturisticCursor({
   }
 
   useEffect(() => {
+    if (!isClient || isMobile) return; // Only run on client and non-mobile
+    
     const cursor = cursorRef.current
     const cursorRing = cursorRingRef.current
-    if (!cursor || !cursorRing || isMobile) return
+    if (!cursor || !cursorRing) return
 
     // Hide default cursor
     document.body.style.cursor = 'none'
@@ -267,15 +273,15 @@ export default function FuturisticCursor({
       document.removeEventListener('mouseleave', onMouseLeaveWindow)
       clearTimeout(timer)
     }
-  }, [isHovering, hoverScale, clickScale, trailDelay, color, isMobile])
+  }, [isHovering, hoverScale, clickScale, trailDelay, color, isMobile, isClient])
 
   // Function to set trail refs properly
   const setTrailRef = (index: number) => (el: HTMLDivElement | null) => {
     trailRefs.current[index] = el
   }
 
-  // Don't render anything if on mobile
-  if (isMobile) {
+  // Don't render anything if on mobile or not on client side
+  if (isMobile || !isClient) {
     return null
   }
 

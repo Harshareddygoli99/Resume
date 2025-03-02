@@ -6,7 +6,12 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import { gsap } from 'gsap'
 import * as THREE from 'three'
-import FuturisticCursor from './FuturisticCursor'
+import dynamic from 'next/dynamic'
+
+// Dynamically import the cursor component with no SSR
+const FuturisticCursor = dynamic(() => import('./FuturisticCursor'), { 
+  ssr: false 
+})
 
 // Import GSAP TextPlugin for typing animation
 import { TextPlugin } from 'gsap/TextPlugin'
@@ -37,6 +42,12 @@ export default function Hero() {
   const [cursorColor, setCursorColor] = useState('#0070f3')
   const [typingText, setTypingText] = useState('')
   const [isTyping, setIsTyping] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
+  
+  // Set mounted state after component mounts
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!containerRef.current || !textRef.current) return
@@ -105,15 +116,17 @@ export default function Hero() {
 
   return (
     <section id="home" className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden">
-      {/* Futuristic Cursor */}
-      <FuturisticCursor 
-        color={cursorColor}
-        hoverScale={2.5}
-        clickScale={0.8}
-        size={20}
-        trailCount={6}
-        trailDelay={0.05}
-      />
+      {/* Futuristic Cursor - only render on client side */}
+      {isMounted && (
+        <FuturisticCursor 
+          color={cursorColor}
+          hoverScale={2.5}
+          clickScale={0.8}
+          size={20}
+          trailCount={6}
+          trailDelay={0.05}
+        />
+      )}
       
       {/* Cosmic background with CSS stars */}
       <div className="absolute inset-0 cosmic-bg z-0">
