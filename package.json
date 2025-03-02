@@ -1,0 +1,39 @@
+{
+  "name": "resume-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export",
+    "deploy": "next build && touch out/.nojekyll && git add out/ && git commit -m \"Deploy to gh-pages\" && git subtree push --prefix out origin gh-pages"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-three/drei": "^9.99.0",
+    "@react-three/fiber": "^8.15.16",
+    "@tailwindcss/postcss": "^4.0.9",
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.57",
+    "@types/react-dom": "^18.2.19",
+    "autoprefixer": "^10.4.16",
+    "critters": "^0.0.23",
+    "eslint": "^8.56.0",
+    "framer-motion": "^11.0.5",
+    "gsap": "^3.12.5",
+    "next": "^14.1.0",
+    "postcss": "^8.4.31",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.8.0",
+    "tailwindcss": "^3.3.0",
+    "three": "^0.161.0",
+    "typescript": "^5.3.3"
+  }
+}
