@@ -15,7 +15,7 @@ const robotoMono = Roboto_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Interactive Resume | Futuristic Portfolio',
+  title: 'Harsha Portfolio',
   description: 'A futuristic, interactive resume website showcasing skills and experience with fluid animations and immersive UI.',
   keywords: ['resume', 'portfolio', 'interactive', 'developer', 'designer', '3D', 'animation'],
 }
