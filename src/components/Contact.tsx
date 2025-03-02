@@ -21,7 +21,7 @@ export default function Contact() {
   
   // Initialize EmailJS
   useEffect(() => {
-    emailjs.init("YOUR_PUBLIC_KEY")
+    emailjs.init("7jWpP8euGyjVN35hV")
   }, [])
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -34,24 +34,10 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitError('')
     
-    // For testing purposes, simulate a successful submission
-    // Remove this block and uncomment the EmailJS code below when you have your EmailJS account set up
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false)
-      }, 5000)
-    }, 1500)
-    
-    /* Uncomment this when you have your EmailJS account set up
     try {
-      // Replace these with your actual EmailJS service ID, template ID, and public key
-      const serviceId = 'YOUR_SERVICE_ID'
-      const templateId = 'YOUR_TEMPLATE_ID'
+      // Using the provided EmailJS configuration
+      const serviceId = 'service_portfolio'
+      const templateId = 'template_contact'
       
       if (formRef.current) {
         const result = await emailjs.sendForm(serviceId, templateId, formRef.current)
@@ -71,7 +57,6 @@ export default function Contact() {
     } finally {
       setIsSubmitting(false)
     }
-    */
   }
   
   const containerVariants = {
