@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 
@@ -19,6 +19,11 @@ export default function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
   
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init("YOUR_PUBLIC_KEY")
+  }, [])
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -29,14 +34,28 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitError('')
     
+    // For testing purposes, simulate a successful submission
+    // Remove this block and uncomment the EmailJS code below when you have your EmailJS account set up
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setSubmitSuccess(true)
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false)
+      }, 5000)
+    }, 1500)
+    
+    /* Uncomment this when you have your EmailJS account set up
     try {
       // Replace these with your actual EmailJS service ID, template ID, and public key
-      const serviceId = 'service_portfolio'
-      const templateId = 'template_contact'
-      const publicKey = 'YOUR_PUBLIC_KEY'
+      const serviceId = 'YOUR_SERVICE_ID'
+      const templateId = 'YOUR_TEMPLATE_ID'
       
       if (formRef.current) {
-        await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+        const result = await emailjs.sendForm(serviceId, templateId, formRef.current)
+        console.log('Email sent successfully:', result.text)
         
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', subject: '', message: '' })
@@ -52,6 +71,7 @@ export default function Contact() {
     } finally {
       setIsSubmitting(false)
     }
+    */
   }
   
   const containerVariants = {
