@@ -52,29 +52,27 @@ export default function About() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div variants={itemVariants} className="relative">
-              <div className="aspect-square relative rounded-2xl overflow-hidden glass-panel">
+              <div className="aspect-square relative rounded-2xl overflow-hidden glass-panel flex items-center justify-center p-8">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 z-0"></div>
                 <img 
                   src={getAssetPath("/images/Face.jpeg")} 
                   alt="Profile" 
-                  className="rounded-full w-40 h-40 object-cover border-4 border-primary shadow-lg mx-auto mb-6" 
+                  className="rounded-full w-64 h-64 object-cover border-4 border-primary shadow-lg" 
                 />
               </div>
               
-              <motion.div
-                className="absolute -bottom-5 -right-5 glass-panel p-4 rounded-lg bg-primary/80 backdrop-blur-sm"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <a 
+              <div className="mt-6 text-center">
+                <motion.a 
                   href="/resume/resume.pdf" 
                   target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-sm font-bold text-white hover:text-gray-200 transition-colors"
+                  rel="noopener noreferrer"
+                  className="futuristic-button inline-block"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   View Resume
-                </a>
-              </motion.div>
+                </motion.a>
+              </div>
             </motion.div>
             
             <motion.div variants={itemVariants}>

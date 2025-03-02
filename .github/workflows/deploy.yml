@@ -17,7 +17,18 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'resume-app/package-lock.json'
+          cache-dependency-path: './resume-app/package-lock.json'
+
+      # Explicit caching step to ensure dependencies are cached properly
+      - name: Cache dependencies 💾
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('./resume-app/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies 📦
         run: |
