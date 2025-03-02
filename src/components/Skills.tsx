@@ -20,12 +20,9 @@ import { SiOpenai } from 'react-icons/si'
 import { SiHuggingface } from 'react-icons/si'
 import { FaAws } from 'react-icons/fa'
 import { FaGoogle } from 'react-icons/fa'
-import { FaMicrosoft } from 'react-icons/fa'
 import { SiMysql } from 'react-icons/si'
 import { SiMongodb } from 'react-icons/si'
 import { SiPostgresql } from 'react-icons/si'
-import { SiRedis } from 'react-icons/si'
-import { SiElasticsearch } from 'react-icons/si'
 import { FaServer } from 'react-icons/fa'
 import { SiGraphql } from 'react-icons/si'
 import { SiGrafana } from 'react-icons/si'
@@ -39,6 +36,12 @@ import { FaDocker } from 'react-icons/fa'
 import { SiKubernetes } from 'react-icons/si'
 import { SiApachekafka } from 'react-icons/si'
 import { SiTerraform } from 'react-icons/si'
+import { SiLangchain } from 'react-icons/si'
+import { SiDatabricks } from 'react-icons/si'
+import { SiScikitlearn } from 'react-icons/si'
+import { SiPandas } from 'react-icons/si'
+import { SiNumpy } from 'react-icons/si'
+import { SiDigitalocean } from 'react-icons/si'
 
 // Skill interface
 interface Skill {
@@ -84,6 +87,10 @@ const skillCategories: SkillCategory[] = [
       { name: 'PyTorch', icon: <SiPytorch className="text-[#EE4C2C] h-8 w-8" /> },
       { name: 'OpenAI', icon: <SiOpenai className="text-white h-8 w-8" /> },
       { name: 'Hugging Face', icon: <SiHuggingface className="text-[#FFD21E] h-8 w-8" /> },
+      { name: 'LangChain', icon: <SiLangchain className="text-[#00A3E0] h-8 w-8" /> },
+      { name: 'scikit-learn', icon: <SiScikitlearn className="text-[#F7931E] h-8 w-8" /> },
+      { name: 'Pandas', icon: <SiPandas className="text-[#150458] h-8 w-8" /> },
+      { name: 'NumPy', icon: <SiNumpy className="text-[#013243] h-8 w-8" /> },
     ],
   },
   {
@@ -92,7 +99,8 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: 'AWS', icon: <FaAws className="text-[#FF9900] h-8 w-8" /> },
       { name: 'Google Cloud', icon: <FaGoogle className="text-[#4285F4] h-8 w-8" /> },
-      { name: 'Azure', icon: <FaMicrosoft className="text-[#0078D4] h-8 w-8" /> },
+      { name: 'Databricks', icon: <SiDatabricks className="text-[#FF3621] h-8 w-8" /> },
+      { name: 'DigitalOcean', icon: <SiDigitalocean className="text-[#0080FF] h-8 w-8" /> },
     ],
   },
   {
@@ -102,8 +110,6 @@ const skillCategories: SkillCategory[] = [
       { name: 'MySQL', icon: <SiMysql className="text-[#4479A1] h-8 w-8" /> },
       { name: 'MongoDB', icon: <SiMongodb className="text-[#47A248] h-8 w-8" /> },
       { name: 'PostgreSQL', icon: <SiPostgresql className="text-[#336791] h-8 w-8" /> },
-      { name: 'Redis', icon: <SiRedis className="text-[#DC382D] h-8 w-8" /> },
-      { name: 'Elasticsearch', icon: <SiElasticsearch className="text-[#005571] h-8 w-8" /> },
     ],
   },
   {
