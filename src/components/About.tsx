@@ -51,22 +51,24 @@ export default function About() {
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <motion.div variants={itemVariants} className="relative">
-              <div className="aspect-square relative rounded-2xl overflow-hidden glass-panel flex items-center justify-center p-8">
+            <motion.div variants={itemVariants} className="relative flex flex-col items-center">
+              <div className="w-full max-w-xs aspect-square relative rounded-2xl overflow-hidden glass-panel flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 z-0"></div>
-                <img 
-                  src={getAssetPath("/images/Face.jpeg")} 
-                  alt="Profile" 
-                  className="rounded-full w-64 h-64 object-cover border-4 border-primary shadow-lg" 
-                />
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                  <img 
+                    src={getAssetPath("/images/Face.jpeg")} 
+                    alt="Profile" 
+                    className="rounded-full w-64 h-64 object-cover border-4 border-primary shadow-lg" 
+                  />
+                </div>
               </div>
               
-              <div className="mt-6 text-center">
+              <div className="mt-8 text-center w-full">
                 <motion.a 
-                  href="/resume/resume.pdf" 
+                  href={getAssetPath("/resume/resume.pdf")}
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="futuristic-button inline-block"
+                  className="futuristic-button inline-block px-6 py-3 text-lg"
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
