@@ -17,6 +17,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^9.99.0",
     "@react-three/fiber": "^8.15.16",
     "@tailwindcss/postcss": "^4.0.9",
