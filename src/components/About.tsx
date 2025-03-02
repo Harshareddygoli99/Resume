@@ -50,15 +50,15 @@ export default function About() {
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <motion.div variants={itemVariants} className="relative flex flex-col items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <motion.div variants={itemVariants} className="relative flex flex-col items-center h-full">
               <div className="w-full max-w-xs aspect-square relative rounded-2xl overflow-hidden glass-panel flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 z-0"></div>
-                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
                   <img 
                     src={getAssetPath("/images/Face.jpeg")} 
                     alt="Profile" 
-                    className="rounded-full w-64 h-64 object-cover border-4 border-primary shadow-lg" 
+                    className="rounded-full w-80 h-80 md:w-96 md:h-96 object-cover border-4 border-primary shadow-lg" 
                   />
                 </div>
               </div>
@@ -68,7 +68,7 @@ export default function About() {
                   href={getAssetPath("/resume/resume.pdf")}
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="futuristic-button inline-block px-6 py-3 text-lg"
+                  className="futuristic-button inline-block px-8 py-4 text-lg font-medium"
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
