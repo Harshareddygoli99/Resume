@@ -1,63 +1,11 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import emailjs from '@emailjs/browser'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    from_name: '',
-    from_email: '',
-    subject: '',
-    message: '',
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [submitError, setSubmitError] = useState('')
-  
-  const formRef = useRef<HTMLFormElement>(null)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
-  
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init("7jWpP8euGyjVN35hV")
-  }, [])
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitError('')
-    
-    try {
-      // Make sure the service ID and template ID match exactly what's in your EmailJS dashboard
-      const serviceId = 'service_portfolio'
-      const templateId = 'template_contact'
-      
-      if (formRef.current) {
-        const result = await emailjs.sendForm(serviceId, templateId, formRef.current)
-        console.log('Email sent successfully:', result.text)
-        
-        setSubmitSuccess(true)
-        setFormData({ from_name: '', from_email: '', subject: '', message: '' })
-        
-        // Reset success message after 5 seconds
-        setTimeout(() => {
-          setSubmitSuccess(false)
-        }, 5000)
-      }
-    } catch (error) {
-      console.error('Error sending email:', error)
-      setSubmitError('Failed to send message. Please try again later.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -108,14 +56,14 @@ export default function Contact() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto"
+          className="max-w-3xl mx-auto"
         >
           {/* Contact Info */}
           <motion.div variants={itemVariants} className="space-y-8">
-            <div className="glass-panel p-6 rounded-xl">
-              <h3 className="text-xl font-bold mb-6">Contact Information</h3>
+            <div className="glass-panel p-8 rounded-xl">
+              <h3 className="text-xl font-bold mb-8 text-center">Contact Information</h3>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="p-3 rounded-lg bg-primary/20 text-primary mr-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -161,10 +109,10 @@ export default function Contact() {
               </div>
             </div>
             
-            <div className="glass-panel p-6 rounded-xl">
-              <h3 className="text-xl font-bold mb-6">Connect With Me</h3>
+            <div className="glass-panel p-8 rounded-xl">
+              <h3 className="text-xl font-bold mb-8 text-center">Connect With Me</h3>
               
-              <div className="flex space-x-4">
+              <div className="flex justify-center space-x-6">
                 <a
                   href="https://github.com/Harshareddygoli99"
                   target="_blank"
@@ -214,115 +162,6 @@ export default function Contact() {
                 </a>
               </div>
             </div>
-          </motion.div>
-          
-          {/* Contact Form */}
-          <motion.div variants={itemVariants}>
-            <form ref={formRef} onSubmit={handleSubmit} className="glass-panel p-6 rounded-xl">
-              <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
-              
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="from_name" className="block text-sm font-medium text-gray-300 mb-1">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="from_name"
-                    name="from_name"
-                    value={formData.from_name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-dark/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-white"
-                    placeholder="John Doe"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="from_email" className="block text-sm font-medium text-gray-300 mb-1">
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    id="from_email"
-                    name="from_email"
-                    value={formData.from_email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-dark/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-white"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-1">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-dark/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-white"
-                    placeholder="Project Inquiry"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 bg-dark/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-white resize-none"
-                    placeholder="Hello, I'd like to discuss a project..."
-                  ></textarea>
-                </div>
-                
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="futuristic-button w-full flex justify-center items-center"
-                >
-                  {isSubmitting ? (
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                  ) : null}
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </motion.button>
-                
-                {submitSuccess && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400 text-center"
-                  >
-                    Your message has been sent successfully!
-                  </motion.div>
-                )}
-                
-                {submitError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-center"
-                  >
-                    {submitError}
-                  </motion.div>
-                )}
-              </div>
-            </form>
           </motion.div>
         </motion.div>
         
