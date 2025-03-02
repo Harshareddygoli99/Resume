@@ -13,56 +13,39 @@ const Skills = dynamic(() => import('@/components/Skills'))
 const Projects = dynamic(() => import('@/components/Projects'))
 const Contact = dynamic(() => import('@/components/Contact'))
 const ParticleBackground = dynamic(() => import('@/components/ParticleBackground'), { ssr: false })
+const StarWarsIntro = dynamic(() => import('@/components/StarWarsIntro'), { ssr: false })
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isIntroPlaying, setIsIntroPlaying] = useState(true)
+  const [isClient, setIsClient] = useState(false)
 
+  // Check if we're on the client side
   useEffect(() => {
-    // Simulate loading time for animation
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-
-    return () => clearTimeout(timer)
+    setIsClient(true)
   }, [])
 
-  if (isLoading) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center bg-dark">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-primary neon-text"
-        >
-          <motion.div
-            animate={{ 
-              opacity: [0.5, 1, 0.5],
-              scale: [0.98, 1.02, 0.98],
-            }}
-            transition={{ 
-              repeat: Infinity, 
-              duration: 2,
-              ease: "easeInOut"
-            }}
-          >
-            Loading Experience...
-          </motion.div>
-        </motion.div>
-      </div>
-    )
+  // Handle intro completion
+  const handleIntroComplete = () => {
+    setIsIntroPlaying(false)
   }
 
   return (
-    <main className="min-h-screen relative">
-      <ParticleBackground />
-      <Navbar />
-      <Hero />
-      <About />
-      <Experience />
-      <Skills />
-      <Projects />
-      <Contact />
-    </main>
+    <>
+      {/* Only render the Star Wars intro on client side */}
+      {isClient && isIntroPlaying && (
+        <StarWarsIntro onComplete={handleIntroComplete} />
+      )}
+      
+      <main className={`min-h-screen relative ${isIntroPlaying ? 'opacity-0' : 'opacity-100'}`}>
+        <ParticleBackground />
+        <Navbar />
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+        <Projects />
+        <Contact />
+      </main>
+    </>
   )
 } 
