@@ -27,7 +27,31 @@ export default function FuturisticCursor({
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 })
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    // Check on initial load
+    checkIfMobile()
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile)
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', checkIfMobile)
+    }
+  }, [])
+  
+  // If mobile device, don't render the cursor
+  if (isMobile) {
+    return null
+  }
   
   // Initialize trail refs
   useEffect(() => {
@@ -65,7 +89,7 @@ export default function FuturisticCursor({
   useEffect(() => {
     const cursor = cursorRef.current
     const cursorRing = cursorRingRef.current
-    if (!cursor || !cursorRing) return
+    if (!cursor || !cursorRing || isMobile) return
 
     // Hide default cursor
     document.body.style.cursor = 'none'
@@ -243,55 +267,58 @@ export default function FuturisticCursor({
       document.removeEventListener('mouseleave', onMouseLeaveWindow)
       clearTimeout(timer)
     }
-  }, [isHovering, hoverScale, clickScale, trailDelay, color])
+  }, [isHovering, hoverScale, clickScale, trailDelay, color, isMobile])
 
   // Function to set trail refs properly
   const setTrailRef = (index: number) => (el: HTMLDivElement | null) => {
     trailRefs.current[index] = el
   }
 
+  // Don't render anything if on mobile
+  if (isMobile) {
+    return null
+  }
+
   return (
     <>
-      <div className={`cursor-container ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        {/* Main cursor dot */}
-        <div 
-          ref={cursorRef}
-          className="cursor-dot"
-          style={{
-            width: `${size}px`,
-            height: `${size}px`,
-            backgroundColor: color,
-          }}
-        />
-        
-        {/* Cursor ring */}
-        <div 
-          ref={cursorRingRef}
-          className="cursor-ring"
-          style={{
-            width: `${size * 2}px`,
-            height: `${size * 2}px`,
-            borderColor: color,
-          }}
-        />
-        
-        {/* Cursor trails */}
-        {Array.from({ length: trailCount }).map((_, index) => (
-          <div
-            key={index}
-            ref={setTrailRef(index)}
-            className="cursor-trail"
-            style={{
-              width: `${size * (1 - (index * 0.1))}px`,
-              height: `${size * (1 - (index * 0.1))}px`,
-              backgroundColor: color,
-              opacity: 0.1 - (index * 0.01),
-            }}
-          />
-        ))}
-      </div>
+      <div 
+        ref={cursorRef} 
+        className="cursor-dot" 
+        style={{ 
+          width: `${size}px`, 
+          height: `${size}px`, 
+          backgroundColor: color,
+          opacity: isVisible ? 1 : 0
+        }}
+      />
       
-      {/* Container for ripple effects */}
+      <div 
+        ref={cursorRingRef} 
+        className="cursor-ring" 
+        style={{ 
+          width: `${size * 2}px`, 
+          height: `${size * 2}px`, 
+          borderColor: color,
+          opacity: isVisible ? 0.3 : 0
+        }}
+      />
+      
+      {/* Cursor trails */}
+      {Array.from({ length: trailCount }).map((_, index) => (
+        <div 
+          key={index}
+          ref={setTrailRef(index)}
+          className="cursor-trail" 
+          style={{ 
+            width: `${size * (1 - (index * 0.15))}px`, 
+            height: `${size * (1 - (index * 0.15))}px`, 
+            backgroundColor: color,
+            opacity: isVisible ? 0.1 - (index * 0.01) : 0
+          }}
+        />
+      ))}
+      
+      {/* Ripple container */}
       <div ref={rippleContainerRef} className="ripple-container" />
     </>
   )
