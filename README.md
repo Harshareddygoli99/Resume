@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Futuristic Interactive Resume
 
 A modern, interactive resume website with fluid animations, dynamic widgets, and a visually immersive UI. This project showcases skills and experience in a unique, next-gen graphical interface.
@@ -14,91 +13,64 @@ A modern, interactive resume website with fluid animations, dynamic widgets, and
 - 📝 Interactive contact form
 - ⚡ Built with Next.js and TypeScript for optimal performance
 
-## Technologies Used
-
-- Next.js
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Three.js / React Three Fiber
-- GSAP (GreenSock Animation Platform)
-- React Intersection Observer
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.x or later
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/futuristic-resume.git
-cd futuristic-resume
-```
-
-2. Install dependencies
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Run the development server
-```bash
-npm run dev
-# or with Turbopack (faster)
-npm run dev:turbo
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
-
-## Customization
-
-To personalize this resume:
-
-1. Update personal information in each component
-2. Replace placeholder images with your own in the `public` directory
-3. Modify the color scheme in `tailwind.config.js`
-4. Update project details in the `Projects.tsx` component
-5. Customize skills and experience in their respective components
-
 ## Deployment
 
-This project is configured for deployment to GitHub Pages.
+This project is configured for GitHub Pages deployment.
 
-### Automatic Deployment
+### Automatic Deployment (GitHub Actions)
 
-The project uses GitHub Actions for automatic deployment. When you push to the `main` branch, the website will be automatically built and deployed to GitHub Pages.
+The project includes a GitHub Actions workflow that automatically builds and deploys the site when changes are pushed to the main branch.
 
 ### Manual Deployment
 
-To deploy manually:
+You can also manually deploy the site by running:
 
-1. Build the project:
+```bash
+npm run deploy
+```
+
+This will:
+1. Build the project
+2. Create a `.nojekyll` file to ensure GitHub Pages processes the site correctly
+3. Commit the build to the gh-pages branch
+4. Push the gh-pages branch to GitHub
+
+## Local Development
+
+1. Clone the repository
    ```bash
-   npm run build
+   git clone https://github.com/Harshareddygoli99/Resume.git
+   cd Resume
    ```
 
-2. Deploy to GitHub Pages:
+2. Install dependencies
    ```bash
-   npm run deploy
+   npm install
    ```
+
+3. Start the development server
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Customization
+
+- Update personal information in the `About.tsx` component
+- Modify projects in the `Projects.tsx` component
+- Add or remove skills in the `Skills.tsx` component
+- Update experience in the `Experience.tsx` component
+
+## Technologies Used
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Three.js
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-- [Next.js](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Three.js](https://threejs.org/)
-- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) 
-=======
-# Resume
-A page to view all my details.
->>>>>>> c19813b019bf01b862f704935d892d2424330320
+This project is licensed under the MIT License.
