@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,9 @@ export default function Contact() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   
+  const formRef = useRef<HTMLFormElement>(null)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
   
@@ -21,21 +24,34 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError('')
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', subject: '', message: '' })
+    try {
+      // Replace these with your actual EmailJS service ID, template ID, and public key
+      const serviceId = 'service_portfolio'
+      const templateId = 'template_contact'
+      const publicKey = 'YOUR_PUBLIC_KEY'
       
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false)
-      }, 5000)
-    }, 1500)
+      if (formRef.current) {
+        await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+        
+        setSubmitSuccess(true)
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitSuccess(false)
+        }, 5000)
+      }
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setSubmitError('Failed to send message. Please try again later.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
   
   const containerVariants = {
@@ -197,7 +213,7 @@ export default function Contact() {
           
           {/* Contact Form */}
           <motion.div variants={itemVariants}>
-            <form onSubmit={handleSubmit} className="glass-panel p-6 rounded-xl">
+            <form ref={formRef} onSubmit={handleSubmit} className="glass-panel p-6 rounded-xl">
               <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
               
               <div className="space-y-4">
@@ -290,6 +306,16 @@ export default function Contact() {
                     Your message has been sent successfully!
                   </motion.div>
                 )}
+                
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-center"
+                  >
+                    {submitError}
+                  </motion.div>
+                )}
               </div>
             </form>
           </motion.div>
@@ -301,7 +327,7 @@ export default function Contact() {
           transition={{ duration: 0.5, delay: 1 }}
           className="mt-20 text-center text-gray-400 text-sm"
         >
-          <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Harsha Vardhan Reddy. All rights reserved.</p>
         </motion.div>
       </div>
     </section>
