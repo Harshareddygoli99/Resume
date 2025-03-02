@@ -6,8 +6,8 @@ import emailjs from '@emailjs/browser'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    from_name: '',
+    from_email: '',
     subject: '',
     message: '',
   })
@@ -35,7 +35,7 @@ export default function Contact() {
     setSubmitError('')
     
     try {
-      // Using the provided EmailJS configuration
+      // Make sure the service ID and template ID match exactly what's in your EmailJS dashboard
       const serviceId = 'service_portfolio'
       const templateId = 'template_contact'
       
@@ -44,7 +44,7 @@ export default function Contact() {
         console.log('Email sent successfully:', result.text)
         
         setSubmitSuccess(true)
-        setFormData({ name: '', email: '', subject: '', message: '' })
+        setFormData({ from_name: '', from_email: '', subject: '', message: '' })
         
         // Reset success message after 5 seconds
         setTimeout(() => {
@@ -223,14 +223,14 @@ export default function Contact() {
               
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="from_name" className="block text-sm font-medium text-gray-300 mb-1">
                     Your Name
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="from_name"
+                    name="from_name"
+                    value={formData.from_name}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 bg-dark/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-white"
@@ -239,14 +239,14 @@ export default function Contact() {
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="from_email" className="block text-sm font-medium text-gray-300 mb-1">
                     Your Email
                   </label>
                   <input
                     type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    id="from_email"
+                    name="from_email"
+                    value={formData.from_email}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 bg-dark/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-white"
