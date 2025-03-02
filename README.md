@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Futuristic Interactive Resume
 
 A modern, interactive resume website with fluid animations, dynamic widgets, and a visually immersive UI. This project showcases skills and experience in a unique, next-gen graphical interface.
@@ -97,3 +98,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - [Framer Motion](https://www.framer.com/motion/)
 - [Three.js](https://threejs.org/)
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) 
+=======
+# Resume
+A page to view all my details.
+>>>>>>> c19813b019bf01b862f704935d892d2424330320
