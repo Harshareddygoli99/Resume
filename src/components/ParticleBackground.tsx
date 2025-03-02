@@ -27,40 +27,106 @@ export default function ParticleBackground() {
     renderer.setPixelRatio(window.devicePixelRatio)
     containerRef.current.appendChild(renderer.domElement)
     
-    // Create particles
-    const particlesGeometry = new THREE.BufferGeometry()
-    const particlesCount = 2000
+    // Create background stars
+    const starsGeometry = new THREE.BufferGeometry()
+    const starsCount = 3000
     
-    const posArray = new Float32Array(particlesCount * 3)
-    const colorArray = new Float32Array(particlesCount * 3)
+    const starsPositions = new Float32Array(starsCount * 3)
+    const starsColors = new Float32Array(starsCount * 3)
     
-    // Position and color for each particle
-    for (let i = 0; i < particlesCount * 3; i += 3) {
+    // Position and color for background stars
+    for (let i = 0; i < starsCount * 3; i += 3) {
       // Positions - random in a sphere
-      posArray[i] = (Math.random() - 0.5) * 10
-      posArray[i + 1] = (Math.random() - 0.5) * 10
-      posArray[i + 2] = (Math.random() - 0.5) * 10
+      starsPositions[i] = (Math.random() - 0.5) * 15
+      starsPositions[i + 1] = (Math.random() - 0.5) * 15
+      starsPositions[i + 2] = (Math.random() - 0.5) * 15
       
-      // Colors - blue to purple gradient
-      colorArray[i] = Math.random() * 0.2 + 0.1 // R
-      colorArray[i + 1] = Math.random() * 0.2 + 0.3 // G
-      colorArray[i + 2] = Math.random() * 0.5 + 0.5 // B
+      // Colors - white to slight yellow for stars
+      const brightness = Math.random() * 0.2 + 0.8
+      starsColors[i] = brightness // R
+      starsColors[i + 1] = brightness // G
+      starsColors[i + 2] = brightness * (Math.random() * 0.3 + 0.7) // B (slightly less for yellowish tint)
     }
     
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3))
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3))
+    starsGeometry.setAttribute('color', new THREE.BufferAttribute(starsColors, 3))
     
-    // Material
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.02,
+    // Stars material
+    const starsMaterial = new THREE.PointsMaterial({
+      size: 0.015,
       vertexColors: true,
       transparent: true,
       opacity: 0.8,
     })
     
-    // Mesh
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial)
-    scene.add(particlesMesh)
+    // Stars mesh
+    const starsMesh = new THREE.Points(starsGeometry, starsMaterial)
+    scene.add(starsMesh)
+    
+    // Create Milky Way galaxy effect
+    const galaxyGeometry = new THREE.BufferGeometry()
+    const galaxyParticlesCount = 5000
+    
+    const galaxyPositions = new Float32Array(galaxyParticlesCount * 3)
+    const galaxyColors = new Float32Array(galaxyParticlesCount * 3)
+    
+    // Create spiral galaxy pattern
+    for (let i = 0; i < galaxyParticlesCount * 3; i += 3) {
+      // Create spiral arms
+      const radius = THREE.MathUtils.randFloat(1, 5)
+      const spinAngle = radius * 2.5
+      const branchAngle = (Math.floor(Math.random() * 4)) * (Math.PI * 2) / 4
+      
+      const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3
+      const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3
+      const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.1
+      
+      galaxyPositions[i] = Math.cos(spinAngle + branchAngle) * radius + randomX
+      galaxyPositions[i + 1] = randomY
+      galaxyPositions[i + 2] = Math.sin(spinAngle + branchAngle) * radius + randomZ
+      
+      // Colors - white/blue in center, more yellowish/reddish at edges
+      const distanceFromCenter = Math.sqrt(
+        Math.pow(galaxyPositions[i], 2) + 
+        Math.pow(galaxyPositions[i + 1], 2) + 
+        Math.pow(galaxyPositions[i + 2], 2)
+      )
+      
+      // Color gradient from center to edge
+      if (distanceFromCenter < 1.5) {
+        // Center: white/blue
+        galaxyColors[i] = 0.8 + Math.random() * 0.2 // R
+        galaxyColors[i + 1] = 0.8 + Math.random() * 0.2 // G
+        galaxyColors[i + 2] = 0.9 + Math.random() * 0.1 // B
+      } else if (distanceFromCenter < 3) {
+        // Middle: yellowish
+        galaxyColors[i] = 0.8 + Math.random() * 0.2 // R
+        galaxyColors[i + 1] = 0.7 + Math.random() * 0.3 // G
+        galaxyColors[i + 2] = 0.4 + Math.random() * 0.3 // B
+      } else {
+        // Outer: reddish
+        galaxyColors[i] = 0.7 + Math.random() * 0.3 // R
+        galaxyColors[i + 1] = 0.3 + Math.random() * 0.3 // G
+        galaxyColors[i + 2] = 0.2 + Math.random() * 0.2 // B
+      }
+    }
+    
+    galaxyGeometry.setAttribute('position', new THREE.BufferAttribute(galaxyPositions, 3))
+    galaxyGeometry.setAttribute('color', new THREE.BufferAttribute(galaxyColors, 3))
+    
+    // Galaxy material
+    const galaxyMaterial = new THREE.PointsMaterial({
+      size: 0.025,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.7,
+    })
+    
+    // Galaxy mesh
+    const galaxyMesh = new THREE.Points(galaxyGeometry, galaxyMaterial)
+    // Rotate to show the galaxy from a nice angle
+    galaxyMesh.rotation.x = Math.PI / 6
+    scene.add(galaxyMesh)
     
     // Handle window resize
     const handleResize = () => {
@@ -86,12 +152,17 @@ export default function ParticleBackground() {
     const animate = () => {
       requestAnimationFrame(animate)
       
-      // Rotate particles based on mouse position
-      particlesMesh.rotation.x += 0.0005
-      particlesMesh.rotation.y += 0.0005
+      // Rotate stars slowly
+      starsMesh.rotation.x += 0.0002
+      starsMesh.rotation.y += 0.0002
       
-      particlesMesh.rotation.x += mouseY * 0.0005
-      particlesMesh.rotation.y += mouseX * 0.0005
+      // Rotate galaxy more slowly
+      galaxyMesh.rotation.z += 0.0001
+      
+      // Add subtle mouse interaction
+      starsMesh.rotation.x += mouseY * 0.0002
+      starsMesh.rotation.y += mouseX * 0.0002
+      galaxyMesh.rotation.z += mouseX * 0.00005
       
       renderer.render(scene, camera)
     }
@@ -103,8 +174,10 @@ export default function ParticleBackground() {
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
       containerRef.current?.removeChild(renderer.domElement)
-      particlesGeometry.dispose()
-      particlesMaterial.dispose()
+      starsGeometry.dispose()
+      starsMaterial.dispose()
+      galaxyGeometry.dispose()
+      galaxyMaterial.dispose()
     }
   }, [])
 
