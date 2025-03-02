@@ -2,92 +2,121 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import Image from 'next/image'
+import { 
+  SiJava, SiPython, SiJavascript, SiTypescript, 
+  SiSpringboot, SiReact, SiNextdotjs, SiNodedotjs, 
+  SiDocker, SiKubernetes, SiApachekafka, SiTerraform,
+  SiAmazonaws, SiMysql, SiMongodb, SiGraphql,
+  SiGrafana, SiSplunk, SiGit, SiJenkins,
+  SiTensorflow, SiPytorch, SiOpenai, SiHuggingface,
+  SiTailwindcss, SiAngular, SiVuedotjs, SiExpress,
+  SiGooglecloud, SiMicrosoftazure, SiPostgresql, SiRedis,
+  SiElasticsearch, SiPrometheus, SiGithubactions, SiGitlab
+} from 'react-icons/si'
+import { TbApi } from 'react-icons/tb'
 
-// Skill category interface
+// Skill interface
 interface Skill {
   name: string;
-  level: number;
-  icon?: string;
+  icon: JSX.Element;
 }
 
 interface SkillCategory {
   id: number;
   title: string;
   skills: Skill[];
-  icon: JSX.Element;
 }
 
-// Updated skill categories based on user requirements
+// Skill categories with icons
 const skillCategories: SkillCategory[] = [
   {
     id: 1,
-    title: 'Frontend Development',
+    title: 'Languages',
     skills: [
-      { name: 'React', level: 90, icon: '⚛️' },
-      { name: 'Next.js', level: 85, icon: '▲' },
-      { name: 'TypeScript', level: 80, icon: 'TS' },
-      { name: 'Tailwind CSS', level: 80, icon: '🌊' },
+      { name: 'Java', icon: <SiJava className="text-[#007396] h-8 w-8" /> },
+      { name: 'Python', icon: <SiPython className="text-[#3776AB] h-8 w-8" /> },
+      { name: 'JavaScript', icon: <SiJavascript className="text-[#F7DF1E] h-8 w-8" /> },
+      { name: 'TypeScript', icon: <SiTypescript className="text-[#3178C6] h-8 w-8" /> },
     ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6"></polyline>
-        <polyline points="8 6 2 12 8 18"></polyline>
-      </svg>
-    ),
   },
   {
     id: 2,
-    title: 'Backend Development',
+    title: 'Frameworks & Libraries',
     skills: [
-      { name: 'Java (Spring Boot)', level: 90, icon: '☕' },
-      { name: 'Node.js', level: 80, icon: '🟢' },
-      { name: 'Python (Django/Flask)', level: 75, icon: '🐍' },
-      { name: 'REST / GraphQL APIs', level: 85, icon: '🔌' },
+      { name: 'Spring Boot', icon: <SiSpringboot className="text-[#6DB33F] h-8 w-8" /> },
+      { name: 'React', icon: <SiReact className="text-[#61DAFB] h-8 w-8" /> },
+      { name: 'Next.js', icon: <SiNextdotjs className="text-white h-8 w-8" /> },
+      { name: 'Node.js', icon: <SiNodedotjs className="text-[#339933] h-8 w-8" /> },
+      { name: 'Express', icon: <SiExpress className="text-white h-8 w-8" /> },
+      { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-[#06B6D4] h-8 w-8" /> },
     ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-        <line x1="6" y1="6" x2="6.01" y2="6"></line>
-        <line x1="6" y1="18" x2="6.01" y2="18"></line>
-      </svg>
-    ),
   },
   {
     id: 3,
     title: 'AI & Emerging Tech',
     skills: [
-      { name: 'AI Integration (LLM, Generative AI)', level: 70, icon: '🧠' },
-      { name: 'Python (ML Libraries)', level: 80, icon: '📊' },
-      { name: 'TensorFlow / PyTorch', level: 75, icon: '🔥' },
-      { name: 'Data Analysis & Visualization', level: 80, icon: '📈' },
+      { name: 'TensorFlow', icon: <SiTensorflow className="text-[#FF6F00] h-8 w-8" /> },
+      { name: 'PyTorch', icon: <SiPytorch className="text-[#EE4C2C] h-8 w-8" /> },
+      { name: 'OpenAI', icon: <SiOpenai className="text-white h-8 w-8" /> },
+      { name: 'Hugging Face', icon: <SiHuggingface className="text-[#FFD21E] h-8 w-8" /> },
     ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"></path>
-        <circle cx="7.5" cy="14.5" r="1.5"></circle>
-        <circle cx="16.5" cy="14.5" r="1.5"></circle>
-      </svg>
-    ),
   },
   {
     id: 4,
-    title: 'DevOps & Cloud',
+    title: 'Cloud Platforms',
     skills: [
-      { name: 'Docker', level: 80, icon: '🐳' },
-      { name: 'Kubernetes', level: 75, icon: '☸️' },
-      { name: 'AWS', level: 70, icon: '☁️' },
-      { name: 'CI/CD (Jenkins / GitHub Actions)', level: 85, icon: '🔄' },
+      { name: 'AWS', icon: <SiAmazonaws className="text-[#FF9900] h-8 w-8" /> },
+      { name: 'Google Cloud', icon: <SiGooglecloud className="text-[#4285F4] h-8 w-8" /> },
+      { name: 'Azure', icon: <SiMicrosoftazure className="text-[#0078D4] h-8 w-8" /> },
     ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 12.5c0 1.76-1.34 3.23-3.08 3.43-1.5 5.5-6.56 8.14-11.17 6.32-4.6-1.8-7.17-7.12-5.54-11.97.51-1.5.51-3.01 0-4.51C.55 1.41 3.13-3.92 7.72-5.71c4.82-1.88 10.05.94 11.48 6.32C21.08 1.01 22.5 2.5 22.5 4.26"></path>
-        <path d="M17 22v-5"></path>
-        <path d="M21 22v-5"></path>
-        <path d="M22 19h-6"></path>
-      </svg>
-    ),
+  },
+  {
+    id: 5,
+    title: 'Databases',
+    skills: [
+      { name: 'MySQL', icon: <SiMysql className="text-[#4479A1] h-8 w-8" /> },
+      { name: 'MongoDB', icon: <SiMongodb className="text-[#47A248] h-8 w-8" /> },
+      { name: 'PostgreSQL', icon: <SiPostgresql className="text-[#336791] h-8 w-8" /> },
+      { name: 'Redis', icon: <SiRedis className="text-[#DC382D] h-8 w-8" /> },
+      { name: 'Elasticsearch', icon: <SiElasticsearch className="text-[#005571] h-8 w-8" /> },
+    ],
+  },
+  {
+    id: 6,
+    title: 'Web & API Development',
+    skills: [
+      { name: 'RESTful APIs', icon: <TbApi className="text-[#0096FF] h-8 w-8" /> },
+      { name: 'GraphQL', icon: <SiGraphql className="text-[#E10098] h-8 w-8" /> },
+    ],
+  },
+  {
+    id: 7,
+    title: 'Monitoring & Performance',
+    skills: [
+      { name: 'Grafana', icon: <SiGrafana className="text-[#F46800] h-8 w-8" /> },
+      { name: 'Splunk', icon: <SiSplunk className="text-[#FF00FF] h-8 w-8" /> },
+      { name: 'Prometheus', icon: <SiPrometheus className="text-[#E6522C] h-8 w-8" /> },
+    ],
+  },
+  {
+    id: 8,
+    title: 'Version Control & CI/CD',
+    skills: [
+      { name: 'Git', icon: <SiGit className="text-[#F05032] h-8 w-8" /> },
+      { name: 'Jenkins', icon: <SiJenkins className="text-[#D24939] h-8 w-8" /> },
+      { name: 'GitHub Actions', icon: <SiGithubactions className="text-[#2088FF] h-8 w-8" /> },
+      { name: 'GitLab CI', icon: <SiGitlab className="text-[#FCA121] h-8 w-8" /> },
+    ],
+  },
+  {
+    id: 9,
+    title: 'DevOps & Infrastructure',
+    skills: [
+      { name: 'Docker', icon: <SiDocker className="text-[#2496ED] h-8 w-8" /> },
+      { name: 'Kubernetes', icon: <SiKubernetes className="text-[#326CE5] h-8 w-8" /> },
+      { name: 'Kafka', icon: <SiApachekafka className="text-white h-8 w-8" /> },
+      { name: 'Terraform', icon: <SiTerraform className="text-[#7B42BC] h-8 w-8" /> },
+    ],
   },
 ]
 
@@ -100,7 +129,7 @@ export default function Skills() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
       },
     },
   }
@@ -135,7 +164,7 @@ export default function Skills() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg text-gray-300"
           >
-            Technologies and frameworks I specialize in
+            Core technologies and frameworks I specialize in
           </motion.p>
         </div>
         
@@ -144,7 +173,7 @@ export default function Skills() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {skillCategories.map((category) => (
             <motion.div
@@ -153,35 +182,18 @@ export default function Skills() {
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
               className="glass-panel p-6 rounded-xl backdrop-blur-lg"
             >
-              <div className="flex items-center mb-6">
-                <div className="p-3 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 text-primary mr-4 shadow-lg shadow-primary/20">
-                  {category.icon}
-                </div>
-                <h3 className="text-xl font-bold">{category.title}</h3>
-              </div>
+              <h3 className="text-xl font-bold mb-4 text-primary">{category.title}</h3>
               
-              <div className="space-y-5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {category.skills.map((skill) => (
-                  <div key={skill.name} className="group">
-                    <div className="flex justify-between mb-2 items-center">
-                      <div className="flex items-center">
-                        {skill.icon && (
-                          <span className="mr-2 text-lg bg-dark/50 w-8 h-8 flex items-center justify-center rounded-full border border-primary/30 group-hover:border-primary/80 transition-all duration-300">
-                            {skill.icon}
-                          </span>
-                        )}
-                        <span className="font-medium text-gray-200">{skill.name}</span>
-                      </div>
-                      <span className="text-primary font-semibold">{skill.level}%</span>
+                  <div 
+                    key={skill.name} 
+                    className="flex flex-col items-center justify-center p-3 rounded-lg bg-dark/30 hover:bg-dark/50 transition-all duration-300 border border-primary/10 hover:border-primary/30 group"
+                  >
+                    <div className="mb-2 transform transition-transform duration-300 group-hover:scale-110">
+                      {skill.icon}
                     </div>
-                    <div className="w-full bg-dark/50 rounded-full h-3 overflow-hidden shadow-inner shadow-black/50">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-                        className="h-3 rounded-full bg-gradient-to-r from-primary via-purple-500 to-secondary animate-gradient-x shadow-lg shadow-primary/20"
-                      ></motion.div>
-                    </div>
+                    <span className="text-sm font-medium text-gray-300 text-center">{skill.name}</span>
                   </div>
                 ))}
               </div>
