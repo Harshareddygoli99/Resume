@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 
 // Import icons individually
 import { FaJava } from 'react-icons/fa'
@@ -42,6 +42,7 @@ import { SiScikitlearn } from 'react-icons/si'
 import { SiPandas } from 'react-icons/si'
 import { SiNumpy } from 'react-icons/si'
 import { SiDigitalocean } from 'react-icons/si'
+import { FaStar } from 'react-icons/fa'
 
 // Skill interface
 interface Skill {
@@ -54,6 +55,25 @@ interface SkillCategory {
   title: string;
   skills: Skill[];
 }
+
+// Star component for cosmic theme
+const StarIcon = ({ size = 'md', className = '', pulseDelay = 0 }) => {
+  const sizeClasses = {
+    sm: 'h-3 w-3',
+    md: 'h-4 w-4',
+    lg: 'h-5 w-5',
+  };
+  
+  return (
+    <FaStar 
+      className={`text-yellow-300 ${sizeClasses[size as keyof typeof sizeClasses]} ${className}`} 
+      style={{ 
+        animation: `pulse 3s infinite ${pulseDelay}s`,
+        filter: 'drop-shadow(0 0 4px rgba(234, 179, 8, 0.8))'
+      }} 
+    />
+  );
+};
 
 // Skill categories with icons
 const skillCategories: SkillCategory[] = [
@@ -154,6 +174,21 @@ const skillCategories: SkillCategory[] = [
 export default function Skills() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
+  const [stars, setStars] = useState<{x: number, y: number, size: string, delay: number}[]>([])
+  
+  // Generate random stars for background
+  useEffect(() => {
+    const newStars = []
+    for (let i = 0; i < 50; i++) {
+      newStars.push({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: ['sm', 'md', 'lg'][Math.floor(Math.random() * 3)],
+        delay: Math.random() * 3
+      })
+    }
+    setStars(newStars)
+  }, [])
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -175,8 +210,25 @@ export default function Skills() {
   }
 
   return (
-    <section id="skills" className="py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-dark/95 to-dark opacity-90 z-0"></div>
+    <section id="skills" className="py-20 relative overflow-hidden">
+      {/* Galaxy background overlay */}
+      <div className="absolute inset-0 bg-black z-0">
+        <div className="stars"></div>
+      </div>
+      
+      {/* Random stars */}
+      {stars.map((star, index) => (
+        <div 
+          key={index}
+          className="absolute z-10"
+          style={{
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+          }}
+        >
+          <StarIcon size={star.size} pulseDelay={star.delay} />
+        </div>
+      ))}
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
@@ -210,22 +262,46 @@ export default function Skills() {
             <motion.div
               key={category.id}
               variants={itemVariants}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="glass-panel p-6 rounded-xl backdrop-blur-lg"
+              whileHover={{ 
+                y: -5, 
+                boxShadow: '0 0 15px rgba(0, 112, 243, 0.5), 0 0 30px rgba(0, 112, 243, 0.3)', 
+                transition: { duration: 0.2 } 
+              }}
+              className="cosmic-panel p-6 rounded-xl backdrop-blur-lg relative overflow-hidden"
             >
+              {/* Star decorations */}
+              <div className="absolute top-2 left-2">
+                <StarIcon size="sm" />
+              </div>
+              <div className="absolute top-2 right-2">
+                <StarIcon size="sm" />
+              </div>
+              <div className="absolute bottom-2 left-2">
+                <StarIcon size="sm" />
+              </div>
+              <div className="absolute bottom-2 right-2">
+                <StarIcon size="sm" />
+              </div>
+              
               <h3 className="text-xl font-bold mb-4 text-primary">{category.title}</h3>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {category.skills.map((skill) => (
-                  <div 
+                  <motion.div 
                     key={skill.name} 
-                    className="flex flex-col items-center justify-center p-3 rounded-lg bg-dark/30 hover:bg-dark/50 transition-all duration-300 border border-primary/10 hover:border-primary/30 group"
+                    className="skill-star flex flex-col items-center justify-center p-3 transition-all duration-300 group"
+                    whileHover={{ 
+                      scale: 1.05,
+                      filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.5))'
+                    }}
                   >
-                    <div className="mb-2 transform transition-transform duration-300 group-hover:scale-110">
+                    <div className="mb-2 transform transition-transform duration-300 group-hover:scale-110 relative">
                       {skill.icon}
+                      {/* Star glow effect */}
+                      <div className="absolute inset-0 star-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <span className="text-sm font-medium text-gray-300 text-center">{skill.name}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -241,7 +317,7 @@ export default function Skills() {
           <p className="text-gray-300 mb-6">
             I'm always exploring cutting-edge frameworks and AI breakthroughs, ensuring I stay at the forefront of software innovation.
           </p>
-          <a href="#projects" className="futuristic-button inline-block">
+          <a href="#projects" className="cosmic-button inline-block">
             See My Projects
           </a>
         </motion.div>
