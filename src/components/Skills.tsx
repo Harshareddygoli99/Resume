@@ -2,18 +2,43 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { 
-  SiJava, SiPython, SiJavascript, SiTypescript, 
-  SiSpringboot, SiReact, SiNextdotjs, SiNodedotjs, 
-  SiDocker, SiKubernetes, SiApachekafka, SiTerraform,
-  SiAmazonaws, SiMysql, SiMongodb, SiGraphql,
-  SiGrafana, SiSplunk, SiGit, SiJenkins,
-  SiTensorflow, SiPytorch, SiOpenai, SiHuggingface,
-  SiTailwindcss, SiAngular, SiVuedotjs, SiExpress,
-  SiGooglecloud, SiMicrosoftazure, SiPostgresql, SiRedis,
-  SiElasticsearch, SiPrometheus, SiGithubactions, SiGitlab
-} from 'react-icons/si'
-import { TbApi } from 'react-icons/tb'
+
+// Import icons individually
+import { FaJava } from 'react-icons/fa'
+import { FaPython } from 'react-icons/fa'
+import { FaJs } from 'react-icons/fa'
+import { SiTypescript } from 'react-icons/si'
+import { SiSpringboot } from 'react-icons/si'
+import { FaReact } from 'react-icons/fa'
+import { SiNextdotjs } from 'react-icons/si'
+import { FaNodeJs } from 'react-icons/fa'
+import { SiExpress } from 'react-icons/si'
+import { SiTailwindcss } from 'react-icons/si'
+import { SiTensorflow } from 'react-icons/si'
+import { SiPytorch } from 'react-icons/si'
+import { SiOpenai } from 'react-icons/si'
+import { SiHuggingface } from 'react-icons/si'
+import { FaAws } from 'react-icons/fa'
+import { FaGoogle } from 'react-icons/fa'
+import { FaMicrosoft } from 'react-icons/fa'
+import { SiMysql } from 'react-icons/si'
+import { SiMongodb } from 'react-icons/si'
+import { SiPostgresql } from 'react-icons/si'
+import { SiRedis } from 'react-icons/si'
+import { SiElasticsearch } from 'react-icons/si'
+import { FaServer } from 'react-icons/fa'
+import { SiGraphql } from 'react-icons/si'
+import { SiGrafana } from 'react-icons/si'
+import { SiSplunk } from 'react-icons/si'
+import { SiPrometheus } from 'react-icons/si'
+import { FaGitAlt } from 'react-icons/fa'
+import { FaJenkins } from 'react-icons/fa'
+import { SiGithubactions } from 'react-icons/si'
+import { FaGitlab } from 'react-icons/fa'
+import { FaDocker } from 'react-icons/fa'
+import { SiKubernetes } from 'react-icons/si'
+import { SiApachekafka } from 'react-icons/si'
+import { SiTerraform } from 'react-icons/si'
 
 // Skill interface
 interface Skill {
@@ -33,9 +58,9 @@ const skillCategories: SkillCategory[] = [
     id: 1,
     title: 'Languages',
     skills: [
-      { name: 'Java', icon: <SiJava className="text-[#007396] h-8 w-8" /> },
-      { name: 'Python', icon: <SiPython className="text-[#3776AB] h-8 w-8" /> },
-      { name: 'JavaScript', icon: <SiJavascript className="text-[#F7DF1E] h-8 w-8" /> },
+      { name: 'Java', icon: <FaJava className="text-[#007396] h-8 w-8" /> },
+      { name: 'Python', icon: <FaPython className="text-[#3776AB] h-8 w-8" /> },
+      { name: 'JavaScript', icon: <FaJs className="text-[#F7DF1E] h-8 w-8" /> },
       { name: 'TypeScript', icon: <SiTypescript className="text-[#3178C6] h-8 w-8" /> },
     ],
   },
@@ -44,9 +69,9 @@ const skillCategories: SkillCategory[] = [
     title: 'Frameworks & Libraries',
     skills: [
       { name: 'Spring Boot', icon: <SiSpringboot className="text-[#6DB33F] h-8 w-8" /> },
-      { name: 'React', icon: <SiReact className="text-[#61DAFB] h-8 w-8" /> },
+      { name: 'React', icon: <FaReact className="text-[#61DAFB] h-8 w-8" /> },
       { name: 'Next.js', icon: <SiNextdotjs className="text-white h-8 w-8" /> },
-      { name: 'Node.js', icon: <SiNodedotjs className="text-[#339933] h-8 w-8" /> },
+      { name: 'Node.js', icon: <FaNodeJs className="text-[#339933] h-8 w-8" /> },
       { name: 'Express', icon: <SiExpress className="text-white h-8 w-8" /> },
       { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-[#06B6D4] h-8 w-8" /> },
     ],
@@ -65,9 +90,9 @@ const skillCategories: SkillCategory[] = [
     id: 4,
     title: 'Cloud Platforms',
     skills: [
-      { name: 'AWS', icon: <SiAmazonaws className="text-[#FF9900] h-8 w-8" /> },
-      { name: 'Google Cloud', icon: <SiGooglecloud className="text-[#4285F4] h-8 w-8" /> },
-      { name: 'Azure', icon: <SiMicrosoftazure className="text-[#0078D4] h-8 w-8" /> },
+      { name: 'AWS', icon: <FaAws className="text-[#FF9900] h-8 w-8" /> },
+      { name: 'Google Cloud', icon: <FaGoogle className="text-[#4285F4] h-8 w-8" /> },
+      { name: 'Azure', icon: <FaMicrosoft className="text-[#0078D4] h-8 w-8" /> },
     ],
   },
   {
@@ -85,7 +110,7 @@ const skillCategories: SkillCategory[] = [
     id: 6,
     title: 'Web & API Development',
     skills: [
-      { name: 'RESTful APIs', icon: <TbApi className="text-[#0096FF] h-8 w-8" /> },
+      { name: 'RESTful APIs', icon: <FaServer className="text-[#0096FF] h-8 w-8" /> },
       { name: 'GraphQL', icon: <SiGraphql className="text-[#E10098] h-8 w-8" /> },
     ],
   },
@@ -102,17 +127,17 @@ const skillCategories: SkillCategory[] = [
     id: 8,
     title: 'Version Control & CI/CD',
     skills: [
-      { name: 'Git', icon: <SiGit className="text-[#F05032] h-8 w-8" /> },
-      { name: 'Jenkins', icon: <SiJenkins className="text-[#D24939] h-8 w-8" /> },
+      { name: 'Git', icon: <FaGitAlt className="text-[#F05032] h-8 w-8" /> },
+      { name: 'Jenkins', icon: <FaJenkins className="text-[#D24939] h-8 w-8" /> },
       { name: 'GitHub Actions', icon: <SiGithubactions className="text-[#2088FF] h-8 w-8" /> },
-      { name: 'GitLab CI', icon: <SiGitlab className="text-[#FCA121] h-8 w-8" /> },
+      { name: 'GitLab CI', icon: <FaGitlab className="text-[#FCA121] h-8 w-8" /> },
     ],
   },
   {
     id: 9,
     title: 'DevOps & Infrastructure',
     skills: [
-      { name: 'Docker', icon: <SiDocker className="text-[#2496ED] h-8 w-8" /> },
+      { name: 'Docker', icon: <FaDocker className="text-[#2496ED] h-8 w-8" /> },
       { name: 'Kubernetes', icon: <SiKubernetes className="text-[#326CE5] h-8 w-8" /> },
       { name: 'Kafka', icon: <SiApachekafka className="text-white h-8 w-8" /> },
       { name: 'Terraform', icon: <SiTerraform className="text-[#7B42BC] h-8 w-8" /> },
