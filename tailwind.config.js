@@ -61,7 +61,18 @@ module.exports = {
           '50%': { transform: 'translateY(-10px)' }
         }
       },
+      backgroundImage: {
+        'gradient-to-accent': 'linear-gradient(to right, var(--tw-gradient-stops))',
+      },
+      backgroundColor: {
+        'white/10': 'rgba(255, 255, 255, 0.1)',
+      },
     },
   },
   plugins: [],
+  safelist: [
+    'animate-gradient-xy',
+    'to-accent',
+    'bg-white/10'
+  ],
 } 

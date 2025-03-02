@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            **/node_modules
+            ./resume-app/node_modules
             ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('./resume-app/package-lock.json') }}
           restore-keys: |
@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies 📦
         run: |
           cd resume-app
-          npm ci
+          npm ci --legacy-peer-deps
 
       - name: Build 🔧
         run: |
