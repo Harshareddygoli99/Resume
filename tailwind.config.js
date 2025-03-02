@@ -65,7 +65,7 @@ module.exports = {
         'gradient-to-accent': 'linear-gradient(to right, var(--tw-gradient-stops))',
       },
       backgroundColor: {
-        'white/10': 'rgba(255, 255, 255, 0.1)',
+        'black/10': 'rgba(0, 0, 0, 0.1)',
       },
     },
   },
