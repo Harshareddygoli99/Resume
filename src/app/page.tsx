@@ -36,7 +36,7 @@ export default function Home() {
         <StarWarsIntro onComplete={handleIntroComplete} />
       )}
       
-      <main className={`min-h-screen relative ${isIntroPlaying ? 'opacity-0' : 'opacity-100'}`}>
+      <main className={`min-h-screen relative transition-opacity duration-1000 ${isIntroPlaying ? 'opacity-0' : 'opacity-100'}`}>
         <ParticleBackground />
         <Navbar />
         <Hero />

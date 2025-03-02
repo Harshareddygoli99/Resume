@@ -93,65 +93,7 @@ const StarField = ({ onZoomComplete }: { onZoomComplete: () => void }) => {
   )
 }
 
-// Star Wars style text crawl
-const TextCrawl = ({ onComplete }: { onComplete: () => void }) => {
-  const textRef = useRef<HTMLDivElement>(null)
-  
-  useEffect(() => {
-    if (!textRef.current) return
-    
-    // Animate the text crawl
-    gsap.fromTo(
-      textRef.current,
-      {
-        y: window.innerHeight,
-        rotateX: 60,
-        opacity: 1
-      },
-      {
-        y: -window.innerHeight * 1.5,
-        rotateX: 60,
-        duration: 15,
-        ease: "linear",
-        onComplete
-      }
-    )
-  }, [onComplete])
-  
-  return (
-    <div className="absolute inset-0 flex items-center justify-center overflow-hidden perspective">
-      <div 
-        ref={textRef} 
-        className="text-center text-yellow-400 font-bold transform-3d"
-        style={{ 
-          width: '80%', 
-          maxWidth: '800px',
-          transformOrigin: 'center bottom'
-        }}
-      >
-        <h2 className="text-4xl mb-6">A LONG TIME AGO IN A GALAXY FAR, FAR AWAY...</h2>
-        <h1 className="text-6xl mb-10">HARSHA'S PORTFOLIO</h1>
-        <div className="text-2xl leading-relaxed">
-          <p className="mb-6">Welcome to my interactive resume experience.</p>
-          <p className="mb-6">I am a passionate developer with expertise in AI, software development, and innovative technologies.</p>
-          <p className="mb-6">Explore my journey through the digital universe and discover the projects and skills I've developed along the way.</p>
-          <p className="mb-6">May the code be with you...</p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function StarWarsIntro({ onComplete }: { onComplete: () => void }) {
-  const [showText, setShowText] = useState(true)
-  const [showStars, setShowStars] = useState(false)
-  
-  // Handle text crawl completion
-  const handleTextComplete = () => {
-    setShowText(false)
-    setShowStars(true)
-  }
-  
   // Handle star zoom completion
   const handleZoomComplete = () => {
     onComplete()
@@ -159,32 +101,12 @@ export default function StarWarsIntro({ onComplete }: { onComplete: () => void }
   
   return (
     <div className="fixed inset-0 z-50 bg-black">
-      {/* Star Wars logo and initial fade */}
-      {!showStars && !showText && (
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 2, times: [0, 0.5, 1] }}
-          onAnimationComplete={handleZoomComplete}
-        >
-          <h1 className="text-6xl text-yellow-400 font-bold">HARSHA'S PORTFOLIO</h1>
-        </motion.div>
-      )}
-      
-      {/* Text crawl */}
-      {showText && (
-        <TextCrawl onComplete={handleTextComplete} />
-      )}
-      
       {/* Star field with zoom effect */}
-      {showStars && (
-        <div className="absolute inset-0">
-          <Canvas camera={{ position: [0, 0, 50], fov: 75 }}>
-            <StarField onZoomComplete={handleZoomComplete} />
-          </Canvas>
-        </div>
-      )}
+      <div className="absolute inset-0">
+        <Canvas camera={{ position: [0, 0, 50], fov: 75 }}>
+          <StarField onZoomComplete={handleZoomComplete} />
+        </Canvas>
+      </div>
     </div>
   )
 } 
